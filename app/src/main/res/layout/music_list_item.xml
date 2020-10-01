@@ -9,7 +9,6 @@
         android:id="@+id/music_album_img"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@mipmap/ic_launcher"
         android:padding="5dp" />
 
     <TextView
