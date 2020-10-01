@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">prac</string>
+    <string name="stop_btn">stop</string>
+    <string name="start">start</string>
+    <string name="pause">pause</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="song_artist">song_artist</string>
+    <string name="song_name">song name</string>
+    <string name="todo1">TODO1</string>
+    <string name="todo2">TODO2</string>
+    <string name="todo3">TODO3</string>
+    <string name="todo4">TODO4</string>
+    <string name="todo5">TODO5</string>
+    <string name="todo6">TODO6</string>
+    <string name="todo7">TODO7</string>
+    <string name="todo8">TODO8</string>
+    <string name="this_is_playing">this is playing</string>
+    <string name="_1_40">1:40</string>
+    <string name="_4_40">4:40</string>
+</resources>
