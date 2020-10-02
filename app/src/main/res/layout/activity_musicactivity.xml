@@ -29,13 +29,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/menu_btn"
             android:layout_toEndOf="@+id/back_btn"
             android:gravity="center_horizontal"
             android:singleLine="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/this_is_playing"
             android:textColor="#FAF7F7"
-            android:textSize="17sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/menu_btn"
@@ -67,6 +70,7 @@
             android:id="@+id/img_view"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:src="@drawable/grad_bg"
             android:layout_alignParentBottom="true"
             android:contentDescription="@string/todo6" />
 
@@ -84,7 +88,7 @@
         android:singleLine="true"
         android:text="@string/song_name"
         android:textColor="#FAF7F7"
-        android:textSize="22sp" />
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/song_artist"
@@ -98,7 +102,7 @@
         android:singleLine="true"
         android:text="@string/song_artist"
         android:textColor="#FAF7F7"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
     <RelativeLayout
         android:id="@+id/layout_for_button"
