@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import static com.example.prac.MainActivity.musicfilesArrayList;
 
-public class musicactivity extends AppCompatActivity {
+public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     static byte[] img = null;
     static ArrayList<musicfiles> listofsong = new ArrayList<>();
     static Uri uri;
@@ -29,8 +29,7 @@ public class musicactivity extends AppCompatActivity {
     ImageView back_btn, menu_btn, song_img, suffle_btn, repeate_btn, btn_prev, btn_next;
     FloatingActionButton btn_play_pause;
     SeekBar seekBar;
-    int positon = -1;
-
+    private int positon = -1;
     private Handler handler = new Handler();
     private Thread play_pause_thread, prev_thread, next_thread;
 
@@ -41,6 +40,7 @@ public class musicactivity extends AppCompatActivity {
         initview();
         getintentdata();
         song_details();
+        mediaPlayer.setOnCompletionListener(this);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -242,6 +242,7 @@ public class musicactivity extends AppCompatActivity {
                         handler.postDelayed(this, 1000);
                     }
                 });
+                mediaPlayer.setOnCompletionListener(this);
                 btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
                 mediaPlayer.start();
             } else {
@@ -262,6 +263,7 @@ public class musicactivity extends AppCompatActivity {
                         handler.postDelayed(this, 1000);
                     }
                 });
+                mediaPlayer.setOnCompletionListener(this);
                 btn_play_pause.setImageResource(R.drawable.ic_baseline_play_circle_);
             }
 
@@ -311,6 +313,7 @@ public class musicactivity extends AppCompatActivity {
                     handler.postDelayed(this, 1000);
                 }
             });
+            mediaPlayer.setOnCompletionListener(this);
             btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
             mediaPlayer.start();
         } else {
@@ -331,9 +334,20 @@ public class musicactivity extends AppCompatActivity {
                     handler.postDelayed(this, 1000);
                 }
             });
+            mediaPlayer.setOnCompletionListener(this);
             btn_play_pause.setImageResource(R.drawable.ic_baseline_play_circle_);
 
         }
     }
 
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        setBtn_next_thread();
+        if (mediaPlayer != null) {
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+            mediaPlayer.start();
+            btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
+        }
+        mediaPlayer.setOnCompletionListener(this);
+    }
 }
