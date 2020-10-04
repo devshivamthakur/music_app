@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<musicfiles> musicfilesArrayList;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    static boolean shuffle_flag;
+    static boolean repeat_flag;
+    static String shuffle_repeat = "nothing";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

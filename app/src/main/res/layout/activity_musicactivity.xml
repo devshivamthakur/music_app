@@ -121,7 +121,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="32dp"
             android:contentDescription="@string/todo3"
-            android:src="@drawable/ic_baseline_shuffle_on" />
+            android:src="@drawable/ic_baseline_shuffle_off" />
 
         <ImageView
             android:id="@+id/id_prev"
