@@ -35,7 +35,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
 
     private int positon = -1;
     private Handler handler = new Handler();
-    private Thread play_pause_thread, prev_thread, next_thread, suffle_thread;
+    private Thread play_pause_thread, prev_thread, next_thread, suffle_thread,repeat_thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +135,10 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_on);
         } else {
             suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_off);
+        }if (repeat_flag) {
+            repeate_btn.setImageResource(R.drawable.ic_baseline_repeat_on);
+        } else {
+            repeate_btn.setImageResource(R.drawable.ic_baseline_repeat);
         }
         seekBar.setMax(mediaPlayer.getDuration() / 1000);         // take it as second
     }
@@ -172,7 +176,36 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         prevThread();
         play_pausethread();
         shuffle_thread();
+        repeat_thread_method();
         super.onResume();
+    }
+
+    private void repeat_thread_method() {
+        repeat_thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                repeate_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(shuffle_flag) {
+                            shuffle_flag = false;
+                            suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_off);
+                        }
+                        if (!repeat_flag) {
+                            repeat_flag = true;
+                            repeate_btn.setImageResource(R.drawable.ic_baseline_repeat_on);
+                        } else {
+                            repeat_flag = false;
+                            repeate_btn.setImageResource(R.drawable.ic_baseline_repeat);
+                        }
+
+                    }
+
+                });
+            }
+        };
+        repeat_thread.start();
     }
 
     private void shuffle_thread() {
@@ -183,15 +216,19 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                 suffle_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!shuffle_flag) {
-                            shuffle_flag = true;
-                            suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_on);
-                        } else {
-                            shuffle_flag = false;
-                            suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_off);
+                        if (repeat_flag) {
+                            repeat_flag = false;
+                            repeate_btn.setImageResource(R.drawable.ic_baseline_repeat);
                         }
-                    }
+                            if (!shuffle_flag) {
+                                shuffle_flag = true;
+                                suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_on);
+                            } else {
+                                shuffle_flag = false;
+                                suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_off);
+                            }
 
+                    }
                 });
             }
         };
