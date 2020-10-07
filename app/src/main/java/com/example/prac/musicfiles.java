@@ -1,6 +1,6 @@
 package com.example.prac;
 
-public class musicfiles {
+public class musicfiles implements Comparable<musicfiles> {
 
 
     private String path;
@@ -59,5 +59,15 @@ public class musicfiles {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    @Override
+    public int compareTo(musicfiles o) {
+        if (title.compareTo(o.title) == 0) {
+            return 0;
+        } else if (title.compareTo(o.title) > 0) {
+            return 1;
+        }
+        return -1;
     }
 }
