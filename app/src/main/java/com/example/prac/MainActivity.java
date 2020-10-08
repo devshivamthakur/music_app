@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     static boolean shuffle_flag;
     static boolean repeat_flag;
-    static String shuffle_repeat = "nothing";
+    static boolean next_small_layout_flag;
+    static String small_music = "no";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

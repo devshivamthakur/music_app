@@ -21,7 +21,10 @@ import java.util.Random;
 import static com.example.prac.MainActivity.musicfilesArrayList;
 import static com.example.prac.MainActivity.repeat_flag;
 import static com.example.prac.MainActivity.shuffle_flag;
-import static com.example.prac.MainActivity.shuffle_repeat;
+import static com.example.prac.MainActivity.small_music;
+import static com.example.prac.Songs_fragment.imageView_next;
+import static com.example.prac.Songs_fragment.img_song_img;
+import static com.example.prac.Songs_fragment.song_name2;
 
 public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     static byte[] img = null;
@@ -31,11 +34,10 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
     TextView song_name, artist_name, duration_played, duration_total, current_playing;
     ImageView back_btn, menu_btn, song_img, suffle_btn, repeate_btn, btn_prev, btn_next;
     FloatingActionButton btn_play_pause;
+    static int positon = -1;
     SeekBar seekBar;
-
-    private int positon = -1;
     private Handler handler = new Handler();
-    private Thread play_pause_thread, prev_thread, next_thread, suffle_thread,repeat_thread;
+    private Thread play_pause_thread, prev_thread, next_thread, suffle_thread, repeat_thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             current_playing.setText(listofsong.get(positon).getTitle());
             song_name.setText(listofsong.get(positon).getTitle());
             artist_name.setText(listofsong.get(positon).getArtist());
+            song_name2.setText(listofsong.get(positon).getTitle());     // small_music_layout
         }
 
     }
@@ -101,7 +104,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         String totalout = "";
         String totalnew = "";
         String second = String.valueOf(current_pos % 60); // get in second
-        String minute = String.valueOf(current_pos / 60); // get in menute
+        String minute = String.valueOf(current_pos / 60); // get in minute
         totalout = minute + ":" + second;
         totalnew = minute + ":" + "0" + second;
         if (second.length() == 1) {
@@ -165,8 +168,10 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         if (img != null) {
 
             Glide.with(getApplicationContext()).asBitmap().load(img).into(song_img);
+            Glide.with(getApplicationContext()).asBitmap().load(img).into(img_song_img);
         } else {
             Glide.with(getApplicationContext()).asBitmap().load(R.drawable.ic_launcher_background).into(song_img);
+            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.ic_launcher_background).into(img_song_img);
         }
     }
 
@@ -188,7 +193,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                 repeate_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(shuffle_flag) {
+                        if (shuffle_flag) {
                             shuffle_flag = false;
                             suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_off);
                         }
@@ -260,6 +265,12 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             @Override
             public void run() {
                 super.run();
+                imageView_next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setBtn_next_thread();
+                    }
+                });
                 btn_next.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -320,9 +331,9 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                 mediaPlayer.start();
             } else {
                 mediaPlayer.release();
-                if (shuffle_repeat.equals("nothing")) {
+                if (!shuffle_flag && !repeat_flag) {
                     positon = positon - 1 % listofsong.size();
-                } else if (shuffle_repeat.equals("shuffle")) {
+                } else if (shuffle_flag && !repeat_flag) {
                     positon = new Random().nextInt(listofsong.size());
                 }
                 uri = Uri.parse(listofsong.get(positon).getPath());              // song location
@@ -399,12 +410,10 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             mediaPlayer.start();
         } else {
             mediaPlayer.release();
-            if (shuffle_repeat.equals("nothing")) {
+            if (!shuffle_flag && !repeat_flag) {
                 positon = positon + 1 % listofsong.size();
-            } else if (shuffle_repeat.equals("shuffle")) {
+            } else if (shuffle_flag && !repeat_flag) {
                 positon = new Random().nextInt(listofsong.size());
-            } else {
-                return;
             }
             uri = Uri.parse(listofsong.get(positon).getPath());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
@@ -436,5 +445,11 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
         }
         mediaPlayer.setOnCompletionListener(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        small_music = "yes";
+        super.onBackPressed();
     }
 }
