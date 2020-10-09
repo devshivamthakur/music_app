@@ -18,4 +18,6 @@
     <string name="this_is_playing">this is playing</string>
     <string name="_1_40">1:40</string>
     <string name="_4_40">4:40</string>
+    <string name="cont_dsc">song_image</string>
+    <string name="cont_dsc2">next_image</string>
 </resources>

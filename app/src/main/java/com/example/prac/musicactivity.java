@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,12 +19,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.example.prac.MainActivity.check_media_play_or_pause;
 import static com.example.prac.MainActivity.musicfilesArrayList;
 import static com.example.prac.MainActivity.repeat_flag;
 import static com.example.prac.MainActivity.shuffle_flag;
 import static com.example.prac.MainActivity.small_music;
 import static com.example.prac.Songs_fragment.imageView_next;
 import static com.example.prac.Songs_fragment.img_song_img;
+import static com.example.prac.Songs_fragment.play_pause_btn2;
 import static com.example.prac.Songs_fragment.song_name2;
 
 public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
@@ -245,7 +248,12 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             @Override
             public void run() {
                 super.run();
-
+                play_pause_btn2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setPlay_pause_thread();
+                    }
+                });
                 btn_play_pause.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -363,11 +371,14 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
 
             mediaPlayer.start();
             btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
+            play_pause_btn2.setImageResource(R.drawable.ic_baseline_pause_circle);
             //seekBar.setMax(mediaPlayer.getDuration()/1000);
         }    //  after click button if flag is true then music would be play other wise if false then pause
         else {
             btn_play_pause.setImageResource(R.drawable.ic_baseline_play_circle_);
+            play_pause_btn2.setImageResource(R.drawable.ic_baseline_play_circle_);
             mediaPlayer.pause();
+            check_media_play_or_pause = false;
             musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
                 @Override
                 public void run() {
@@ -450,6 +461,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
     @Override
     public void onBackPressed() {
         small_music = "yes";
+        check_media_play_or_pause = mediaPlayer.isPlaying();
         super.onBackPressed();
     }
 }
