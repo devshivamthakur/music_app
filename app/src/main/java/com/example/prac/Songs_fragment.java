@@ -12,19 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import static com.example.prac.MainActivity.check_media_play_or_pause;
 import static com.example.prac.MainActivity.musicfilesArrayList;
-
-import static com.example.prac.MainActivity.next_small_layout_flag;
 import static com.example.prac.MainActivity.small_music;
-;
-import static com.example.prac.musicactivity.img;
-import static com.example.prac.musicactivity.listofsong;
-import static com.example.prac.musicactivity.positon;
 
 public class Songs_fragment extends Fragment {
     RecyclerView recyclerView;
