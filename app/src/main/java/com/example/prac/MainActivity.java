@@ -1,8 +1,6 @@
 package com.example.prac;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -87,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         };
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
         if (cursor != null) {
-            Log.e("1st", "passed");
             while (cursor.moveToNext()) {
                 String path = cursor.getString(4);
                 String title = cursor.getString(2);
@@ -100,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     templist.add(musicfiles);
                 }
-
-                Log.e("data", "title" + title + " path :" + path);
             }
         }
         return templist;
