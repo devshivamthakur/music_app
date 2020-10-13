@@ -20,12 +20,7 @@ import static com.example.prac.MainActivity.small_music;
 public class Songs_fragment extends Fragment {
     RecyclerView recyclerView;
     musicadapter music_Data_adapter;
-    static ImageView imageView_next;
-    static ImageView img_song_img;
-    static TextView song_name2;
-    View v1;
-    RelativeLayout.LayoutParams layoutParams;
-    static FloatingActionButton play_pause_btn2;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,13 +32,6 @@ public class Songs_fragment extends Fragment {
             music_Data_adapter = new musicadapter(musicfilesArrayList, getContext());
             recyclerView.setAdapter(music_Data_adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-            v1 = v.findViewById(R.id.small_music_layout);
-            layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(0, 0, 0, 140);
-            imageView_next = v.findViewById(R.id.id_next);
-            img_song_img = v.findViewById(R.id.song_img2);
-            song_name2 = v.findViewById(R.id.song_title2);
-            play_pause_btn2 = v.findViewById(R.id.btn_play_pause2);
       /*  if(v1.getVisibility()==View.VISIBLE){
 
              recyclerView.setLayoutParams(layoutParams);
@@ -58,15 +46,7 @@ public class Songs_fragment extends Fragment {
 
     @Override
     public void onResume() {
-        if (small_music.equals("yes")) {
-            recyclerView.setLayoutParams(layoutParams);
-            v1.setVisibility(View.VISIBLE);
-        }
-        if (check_media_play_or_pause) {
-            play_pause_btn2.setImageResource(R.drawable.ic_baseline_pause_circle);
-        } else {
-            play_pause_btn2.setImageResource(R.drawable.ic_baseline_play_circle_);
-        }
+
         super.onResume();
     }
 

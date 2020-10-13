@@ -23,10 +23,10 @@ import static com.example.prac.MainActivity.musicfilesArrayList;
 import static com.example.prac.MainActivity.repeat_flag;
 import static com.example.prac.MainActivity.shuffle_flag;
 import static com.example.prac.MainActivity.small_music;
-import static com.example.prac.Songs_fragment.imageView_next;
-import static com.example.prac.Songs_fragment.img_song_img;
-import static com.example.prac.Songs_fragment.play_pause_btn2;
-import static com.example.prac.Songs_fragment.song_name2;
+import static com.example.prac.MainActivity.imageView_next;
+import static com.example.prac.MainActivity.img_song_img;
+import static com.example.prac.MainActivity.play_pause_btn2;
+import static com.example.prac.MainActivity.song_name2;
 
 public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     static byte[] img = null;
@@ -272,12 +272,18 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             @Override
             public void run() {
                 super.run();
-                imageView_next.setOnClickListener(new View.OnClickListener() {
+                musicactivity.this.runOnUiThread(new Runnable() {
                     @Override
-                    public void onClick(View v) {
-                        setBtn_next_thread();
+                    public void run() {
+                        imageView_next.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                setBtn_next_thread();
+                            }
+                        });
                     }
                 });
+
                 btn_next.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

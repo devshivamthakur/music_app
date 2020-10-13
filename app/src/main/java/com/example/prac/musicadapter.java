@@ -3,7 +3,6 @@ package com.example.prac;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
 
 public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder> {
 
@@ -44,9 +42,9 @@ public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder>
         final byte[] img = getAlbumimg(songdata.get(position).getPath());
         if (img != null) {
 
-            Glide.with(context).asBitmap().load(img).into(holder.song_img);
+            Glide.with(context).asBitmap().circleCrop().load(img).into(holder.song_img);
         } else {
-            Glide.with(context).asBitmap().load(R.drawable.ic_launcher_background).into(holder.song_img);
+            Glide.with(context).asBitmap().circleCrop().load(R.drawable.ic_launcher_background).into(holder.song_img);
         }
         holder.music_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override

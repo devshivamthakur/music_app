@@ -18,13 +18,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static final int REQUESTCODE = 1;
     public static ArrayList<musicfiles> musicfilesArrayList;
+    public static ArrayList<String> album_array_list = new ArrayList<>();
     private TabLayout tabLayout;
     private ViewPager viewPager;
     static boolean shuffle_flag;
@@ -32,11 +40,22 @@ public class MainActivity extends AppCompatActivity {
     static boolean next_small_layout_flag;
     static String small_music = "no";
     static boolean check_media_play_or_pause;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        permission();
+    static ImageView imageView_next;
+    static ImageView img_song_img;
+    static TextView song_name2;
+    static FloatingActionButton play_pause_btn2;
+    View v1;
+    RelativeLayout relativeLayout;
+    RelativeLayout.LayoutParams layoutParams;
+    ViewPager.MarginLayoutParams v;
+
+    public static String getPath(String album_name) {
+        for (musicfiles f1 : musicfilesArrayList) {
+            if (f1.getAlbum().equals(album_name)) {
+                return f1.getPath();
+            }
+        }
+        return "";
     }
 
     private void permission() {
@@ -73,9 +92,26 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        permission();
+        layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 0, 0, 140);
+        imageView_next = findViewById(R.id.id_next);
+        img_song_img = findViewById(R.id.song_img2);
+        song_name2 = findViewById(R.id.song_title2);
+        relativeLayout = findViewById(R.id.tab_layout_Relative);
+        v1 = findViewById(R.id.small_music_layout);
+
+        play_pause_btn2 = findViewById(R.id.btn_play_pause2);
+    }
+
     public ArrayList<musicfiles> getallaudio(Context context) {
         ArrayList<musicfiles> templist = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        //String order=MediaStore.Audio.Media.DISPLAY_NAME+" asc ";
         String projection[] = {
                 MediaStore.Audio.Media.ALBUM,
                 MediaStore.Audio.Media.ARTIST,
@@ -97,11 +133,13 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     templist.add(musicfiles);
                 }
+                if (!album_array_list.contains(album)) {
+                    album_array_list.add(album);
+                }
             }
         }
         return templist;
     }
-
     public static class ViewPageAdapter extends FragmentPagerAdapter {
         ArrayList<Fragment> fragments;
         ArrayList<String> titles;
@@ -133,5 +171,20 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return titles.get(position);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        if (small_music.equals("yes")) {
+            relativeLayout.setLayoutParams(layoutParams);
+            v1.setVisibility(View.VISIBLE);
+
+        }
+        if (check_media_play_or_pause) {
+            play_pause_btn2.setImageResource(R.drawable.ic_baseline_pause_circle);
+        } else {
+            play_pause_btn2.setImageResource(R.drawable.ic_baseline_play_circle_);
+        }
+        super.onResume();
     }
 }

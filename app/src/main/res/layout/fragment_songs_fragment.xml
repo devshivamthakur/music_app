@@ -10,12 +10,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include
-        android:id="@+id/small_music_layout"
-        layout="@layout/small_music"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone" />
-
 </RelativeLayout>
