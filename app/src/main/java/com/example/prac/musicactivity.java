@@ -67,15 +67,10 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
 
             }
         });
-        btn_prev.setOnClickListener(new View.OnClickListener() {
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (positon >= 1) {
-                    Intent intent = new Intent(getApplicationContext(), musicactivity.class);
-                    intent.putExtra("pos", positon - 1);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
+                onBackPressed();
             }
         });
         musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
@@ -163,6 +158,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         btn_prev = findViewById(R.id.id_prev);
         btn_play_pause = findViewById(R.id.play_pause);
         seekBar = findViewById(R.id.seek_bar);
+
     }
 
     private void load_img() {

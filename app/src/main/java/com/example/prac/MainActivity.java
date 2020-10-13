@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     View v1;
     RelativeLayout relativeLayout;
     RelativeLayout.LayoutParams layoutParams;
-    ViewPager.MarginLayoutParams v;
 
     public static String getPath(String album_name) {
         for (musicfiles f1 : musicfilesArrayList) {
@@ -173,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume() {                    // use if music is playing and press back btn
         if (small_music.equals("yes")) {
             relativeLayout.setLayoutParams(layoutParams);
             v1.setVisibility(View.VISIBLE);
