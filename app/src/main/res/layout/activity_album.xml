@@ -29,10 +29,26 @@
             android:src="@drawable/grad_bg" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/album_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relative_album_activity_img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/album_name"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold|italic" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/album_name"
         android:id="@+id/album_related_song_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/relative_album_activity_img" />
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>
