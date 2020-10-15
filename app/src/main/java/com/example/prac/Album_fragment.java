@@ -33,16 +33,5 @@ public class Album_fragment extends Fragment {
         recyclerView_album_fragment.setLayoutManager(new GridLayoutManager(getContext(), 2));
         return v;
     }
-   /* public void onResume() {
-        if (small_music.equals("yes")) {
-            recyclerView_album_fragment.setLayoutParams(layoutParams);
-            v1.setVisibility(View.VISIBLE);
-        }
-        if (check_media_play_or_pause) {
-            play_pause_btn2.setImageResource(R.drawable.ic_baseline_pause_circle);
-        } else {
-            play_pause_btn2.setImageResource(R.drawable.ic_baseline_play_circle_);
-        }
-        super.onResume();
-    }*/
+
 }
