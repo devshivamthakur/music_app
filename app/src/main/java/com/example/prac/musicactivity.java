@@ -53,7 +53,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (mediaPlayer != null && fromUser) {
-                    mediaPlayer.seekTo(progress * 1000);     // for millisecond   /// load into song song run according to the seekbar, set timing
+                    mediaPlayer.seekTo(progress * 1000);     // for millisecond   /// load into song song run according to the seek bar, set timing
                 }
             }
 
@@ -97,6 +97,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         }
 
     }
+
     private String formaattedTime(int current_pos) {             // formatted time convert into second and minute;
         String totalout = "";
         String totalnew = "";
@@ -128,14 +129,14 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         } else {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             load_img();
-
             mediaPlayer.start();
         }
         if (shuffle_flag) {
             suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_on);
         } else {
             suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_off);
-        }if (repeat_flag) {
+        }
+        if (repeat_flag) {
             repeate_btn.setImageResource(R.drawable.ic_baseline_repeat_on);
         } else {
             repeate_btn.setImageResource(R.drawable.ic_baseline_repeat);
@@ -223,13 +224,13 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                             repeat_flag = false;
                             repeate_btn.setImageResource(R.drawable.ic_baseline_repeat);
                         }
-                            if (!shuffle_flag) {
-                                shuffle_flag = true;
-                                suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_on);
-                            } else {
-                                shuffle_flag = false;
-                                suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_off);
-                            }
+                        if (!shuffle_flag) {
+                            shuffle_flag = true;
+                            suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_on);
+                        } else {
+                            shuffle_flag = false;
+                            suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_off);
+                        }
 
                     }
                 });
