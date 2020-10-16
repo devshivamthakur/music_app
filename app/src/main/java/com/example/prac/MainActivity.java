@@ -1,4 +1,5 @@
 package com.example.prac;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUESTCODE = 1;
     public static ArrayList<musicfiles> musicfilesArrayList;
     public static ArrayList<String> album_array_list = new ArrayList<>();
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     static boolean shuffle_flag;
     static boolean repeat_flag;
     static boolean next_small_layout_flag;
@@ -46,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     View v1;
     RelativeLayout relativeLayout;
     RelativeLayout.LayoutParams layoutParams;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     public static String getPath(String album_name) {
         for (musicfiles f1 : musicfilesArrayList) {
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         String projection[] = {
                 MediaStore.Audio.Media.ALBUM,
                 MediaStore.Audio.Media.ARTIST,
-                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.TITLE,       // song name
                 MediaStore.Audio.Media.DURATION,
                 MediaStore.Audio.Media.DATA      // for path
         };
@@ -138,6 +139,21 @@ public class MainActivity extends AppCompatActivity {
         }
         return templist;
     }
+
+    @Override
+    protected void onResume() {                    // use if music is playing and press back btn
+        if (small_music.equals("yes")) {
+            relativeLayout.setLayoutParams(layoutParams);
+            v1.setVisibility(View.VISIBLE);
+        }
+        if (check_media_play_or_pause) {
+            play_pause_btn2.setImageResource(R.drawable.ic_baseline_pause_circle);
+        } else {
+            play_pause_btn2.setImageResource(R.drawable.ic_baseline_play_circle_);
+        }
+        super.onResume();
+    }
+
     public static class ViewPageAdapter extends FragmentPagerAdapter {
         ArrayList<Fragment> fragments;
         ArrayList<String> titles;
@@ -169,20 +185,5 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return titles.get(position);
         }
-    }
-
-    @Override
-    protected void onResume() {                    // use if music is playing and press back btn
-        if (small_music.equals("yes")) {
-            relativeLayout.setLayoutParams(layoutParams);
-            v1.setVisibility(View.VISIBLE);
-
-        }
-        if (check_media_play_or_pause) {
-            play_pause_btn2.setImageResource(R.drawable.ic_baseline_pause_circle);
-        } else {
-            play_pause_btn2.setImageResource(R.drawable.ic_baseline_play_circle_);
-        }
-        super.onResume();
     }
 }
