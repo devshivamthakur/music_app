@@ -27,6 +27,7 @@ import static com.example.prac.MainActivity.imageView_next;
 import static com.example.prac.MainActivity.img_song_img;
 import static com.example.prac.MainActivity.play_pause_btn2;
 import static com.example.prac.MainActivity.song_name2;
+import static com.example.prac.album_related_song_adapter.songdata;
 
 public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     static byte[] img = null;
@@ -114,7 +115,13 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
     private void getintentdata() {
         Intent intent = getIntent();
         positon = intent.getIntExtra("pos", -1);
-        listofsong = musicfilesArrayList;
+        String show_activity_message = intent.getStringExtra("from_where");
+        if (show_activity_message.equals("album")) {
+            listofsong = songdata;
+        } else {
+            listofsong = musicfilesArrayList;
+        }
+
         if (listofsong != null) {
             btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
             uri = Uri.parse(listofsong.get(positon).getPath());

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class album_related_song_adapter extends RecyclerView.Adapter<album_related_song_adapter.songholder> {
 
-    private ArrayList<musicfiles> songdata;
+    static ArrayList<musicfiles> songdata;
     private Context context;
 
     public album_related_song_adapter(ArrayList<musicfiles> songdata, Context context) {
@@ -57,7 +57,7 @@ public class album_related_song_adapter extends RecyclerView.Adapter<album_relat
             public void onClick(View v) {
                 Intent intent = new Intent(context, musicactivity.class);
                 intent.putExtra("pos", position);
-                intent.putExtra("song_img", img);
+                intent.putExtra("from_where", "album");
                 context.startActivity(intent);
             }
         });

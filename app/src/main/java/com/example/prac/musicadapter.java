@@ -51,7 +51,7 @@ public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder>
             public void onClick(View v) {
                 Intent intent = new Intent(context, musicactivity.class);
                 intent.putExtra("pos", position);
-                intent.putExtra("song_img", img);
+                intent.putExtra("from_where", "all_song");
                 context.startActivity(intent);
             }
         });
