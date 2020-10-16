@@ -45,10 +45,10 @@
         android:textStyle="bold|italic" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/album_name"
         android:id="@+id/album_related_song_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/album_name"
         android:layout_marginTop="10dp" />
 
 </RelativeLayout>
