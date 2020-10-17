@@ -44,7 +44,7 @@ public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder>
 
             Glide.with(context).asBitmap().circleCrop().load(img).into(holder.song_img);
         } else {
-            Glide.with(context).asBitmap().circleCrop().load(R.drawable.ic_launcher_background).into(holder.song_img);
+            Glide.with(context).asBitmap().circleCrop().load(R.drawable.img2).into(holder.song_img);
         }
         holder.music_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override

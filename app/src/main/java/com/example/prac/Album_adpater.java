@@ -49,7 +49,7 @@ public class Album_adpater extends RecyclerView.Adapter<Album_adpater.ViewHolder
             if (img != null) {
                 Glide.with(context).asBitmap().circleCrop().load(img).into(holder.album_img);
             } else {
-                Glide.with(context).asBitmap().circleCrop().load(R.drawable.ic_launcher_background).into(holder.album_img);
+                Glide.with(context).asBitmap().circleCrop().load(R.drawable.img2).into(holder.album_img);
             }
 
         }

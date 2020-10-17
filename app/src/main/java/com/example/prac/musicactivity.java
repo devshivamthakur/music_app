@@ -176,8 +176,8 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             Glide.with(getApplicationContext()).asBitmap().load(img).into(song_img);
             Glide.with(getApplicationContext()).asBitmap().load(img).into(img_song_img);
         } else {
-            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.ic_launcher_background).into(song_img);
-            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.ic_launcher_background).into(img_song_img);
+            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.img2).into(song_img);
+            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.img2).into(img_song_img);
         }
     }
 

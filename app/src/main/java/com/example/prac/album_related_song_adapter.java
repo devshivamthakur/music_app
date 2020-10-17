@@ -50,7 +50,7 @@ public class album_related_song_adapter extends RecyclerView.Adapter<album_relat
 
             Glide.with(context).asBitmap().circleCrop().load(img).into(holder.song_img);
         } else {
-            Glide.with(context).asBitmap().circleCrop().load(R.drawable.ic_launcher_background).into(holder.song_img);
+            Glide.with(context).asBitmap().circleCrop().load(R.drawable.img2).into(holder.song_img);
         }
         holder.music_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override

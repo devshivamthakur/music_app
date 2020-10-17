@@ -54,7 +54,7 @@ public class AlbumActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).asBitmap().load(img).into(album_img);
         }
         if (img == null) {
-            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.ic_launcher_background).into(album_img);
+            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.img2).into(album_img);
         }
     }
 
