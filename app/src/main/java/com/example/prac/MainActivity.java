@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 
@@ -156,7 +157,26 @@ public class MainActivity extends AppCompatActivity {
         } else {
             play_pause_btn2.setImageResource(R.drawable.ic_baseline_play_circle_);
         }
+        go_on_music_activity();
         super.onResume();
+    }
+
+    private void go_on_music_activity() {
+        Thread t1 = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                v1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent it = new Intent(MainActivity.this, musicactivity.class);
+
+                        startActivity(it);
+                    }
+                });
+            }
+        };
+        t1.start();
     }
 
     public static class ViewPageAdapter extends FragmentPagerAdapter {
