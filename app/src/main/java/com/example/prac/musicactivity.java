@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -115,29 +116,41 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
     private void getintentdata() {
         Intent intent = getIntent();
         positon = intent.getIntExtra("pos", -1);
+        //  Toast.makeText(this,String.valueOf(positon),Toast.LENGTH_SHORT).show();
         String show_activity_message = intent.getStringExtra("from_where");
         if (show_activity_message.equals("album")) {
             listofsong = songdata;
         } else {
             listofsong = musicfilesArrayList;
         }
-
         if (listofsong != null) {
             btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
             uri = Uri.parse(listofsong.get(positon).getPath());
         }
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+        if (show_activity_message.equals("small_music_act")) {
+            int du = intent.getIntExtra("duration", 0);
             img = musicadapter.getAlbumimg(String.valueOf(uri));
             load_img();
-            mediaPlayer.start();
+            //   mediaPlayer.seekTo(du*1000);
+            //  Toast.makeText(this,String.valueOf(mediaPlayer.getCurrentPosition()),Toast.LENGTH_LONG).show();
+            seekBar.setProgress(du / 1000);
+            // mediaPlayer.start();
         } else {
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-            load_img();
-            mediaPlayer.start();
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+                img = musicadapter.getAlbumimg(String.valueOf(uri));
+                load_img();
+                mediaPlayer.start();
+            } else {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+                load_img();
+                mediaPlayer.start();
+            }
         }
+
+
         if (shuffle_flag) {
             suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_on);
         } else {

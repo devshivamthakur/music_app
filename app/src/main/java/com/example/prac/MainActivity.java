@@ -34,6 +34,9 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
+import static com.example.prac.musicactivity.mediaPlayer;
+import static com.example.prac.musicactivity.positon;
+
 
 public class MainActivity extends AppCompatActivity {
     public static final int REQUESTCODE = 1;
@@ -166,11 +169,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 super.run();
-                v1.setOnClickListener(new View.OnClickListener() {
+                img_song_img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int dura = mediaPlayer.getCurrentPosition();
                         Intent it = new Intent(MainActivity.this, musicactivity.class);
-
+                        it.putExtra("from_where", "small_music_act");
+                        it.putExtra("pos", positon);
+                        Toast.makeText(MainActivity.this, String.valueOf(positon), Toast.LENGTH_SHORT).show();
+                        it.putExtra("duration", dura);
                         startActivity(it);
                     }
                 });
