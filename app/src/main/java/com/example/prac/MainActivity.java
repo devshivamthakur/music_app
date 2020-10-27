@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent it = new Intent(MainActivity.this, musicactivity.class);
                         it.putExtra("from_where", "small_music_act");
                         it.putExtra("pos", positon);
-                        Toast.makeText(MainActivity.this, String.valueOf(positon), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, String.valueOf(positon), Toast.LENGTH_SHORT).show();
                         it.putExtra("duration", dura);
                         startActivity(it);
                     }
