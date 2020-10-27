@@ -9,13 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import static com.example.prac.MainActivity.check_media_play_or_pause;
 import static com.example.prac.MainActivity.musicfilesArrayList;
-import static com.example.prac.MainActivity.small_music;
 
 public class Songs_fragment extends Fragment {
     RecyclerView recyclerView;
