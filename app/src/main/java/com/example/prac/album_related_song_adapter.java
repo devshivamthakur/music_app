@@ -29,7 +29,11 @@ public class album_related_song_adapter extends RecyclerView.Adapter<album_relat
 
     public static byte[] getAlbumimg(String uri) {
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(uri);
+        try {
+            mediaMetadataRetriever.setDataSource(uri);
+        } catch (Exception e) {
+
+        }
         byte[] img = mediaMetadataRetriever.getEmbeddedPicture();
         mediaMetadataRetriever.release();
         return img;
@@ -45,6 +49,7 @@ public class album_related_song_adapter extends RecyclerView.Adapter<album_relat
     @Override
     public void onBindViewHolder(@NonNull songholder holder, final int position) {
         holder.song_title.setText(songdata.get(position).getTitle());
+        holder.artist_name.setText(songdata.get(position).getArtist());
         final byte[] img = getAlbumimg(songdata.get(position).getPath());
         if (img != null) {
 
@@ -71,8 +76,9 @@ public class album_related_song_adapter extends RecyclerView.Adapter<album_relat
 
     static class songholder extends RecyclerView.ViewHolder {
         RelativeLayout music_item_layout;
-        TextView song_title;
+        TextView song_title, artist_name;
         ImageView song_img;
+
 
         public songholder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +86,7 @@ public class album_related_song_adapter extends RecyclerView.Adapter<album_relat
             song_img = itemView.findViewById(R.id.music_album_img);
             song_title = itemView.findViewById(R.id.song_title);
             music_item_layout = itemView.findViewById(R.id.music_item_layout);
+            artist_name = itemView.findViewById(R.id.artist_name_from_music_item);
         }
     }
 }

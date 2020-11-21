@@ -41,6 +41,7 @@ public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder>
     @Override
     public void onBindViewHolder(@NonNull musicholder holder, final int position) {
         holder.song_title.setText(songdata.get(position).getTitle());
+        holder.artist_name.setText(songdata.get(position).getArtist());
         final byte[] img = getAlbumimg(songdata.get(position).getPath());
         if (img != null) {
 
@@ -78,7 +79,7 @@ public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder>
 
     static class musicholder extends RecyclerView.ViewHolder {
         RelativeLayout music_item_layout;
-        TextView song_title;
+        TextView song_title, artist_name;
         ImageView song_img;
 
         public musicholder(@NonNull View itemView) {
@@ -87,6 +88,7 @@ public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder>
             song_img = itemView.findViewById(R.id.music_album_img);
             song_title = itemView.findViewById(R.id.song_title);
             music_item_layout = itemView.findViewById(R.id.music_item_layout);
+            artist_name = itemView.findViewById(R.id.artist_name_from_music_item);
         }
     }
 }
