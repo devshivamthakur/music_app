@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<musicfiles> getallaudio(Context context) {
         ArrayList<musicfiles> templist = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        //String order=MediaStore.Audio.Media.DISPLAY_NAME+" asc ";
+        String order = MediaStore.MediaColumns.TITLE + "";
         String projection[] = {
                 MediaStore.Audio.Media.ALBUM,
                 MediaStore.Audio.Media.ARTIST,
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 MediaStore.Audio.Media.DURATION,
                 MediaStore.Audio.Media.DATA      // for path
         };
-        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, order);
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 String path = cursor.getString(4);
