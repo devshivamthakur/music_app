@@ -136,10 +136,10 @@ public class MainActivity extends AppCompatActivity {
                 String artist = cursor.getString(1);
                 String duration = cursor.getString(3);
                 musicfiles musicfiles = new musicfiles(path, title, album, duration, artist);
-                if (title.equals("champ_install")) {
-
-                } else {
+                try {
                     templist.add(musicfiles);
+                } catch (Exception e) {
+
                 }
                 if (!album_array_list.contains(album)) {
                     album_array_list.add(album);

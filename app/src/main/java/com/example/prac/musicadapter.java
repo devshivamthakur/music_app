@@ -67,7 +67,10 @@ public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder>
 
     public static byte[] getAlbumimg(String uri) {
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(uri);
+        try {
+            mediaMetadataRetriever.setDataSource(uri);
+        } catch (Exception e) {
+        }
         byte[] img = mediaMetadataRetriever.getEmbeddedPicture();
         mediaMetadataRetriever.release();
         return img;
