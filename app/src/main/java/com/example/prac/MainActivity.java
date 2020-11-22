@@ -156,7 +156,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {                    // use if music is playing and press back btn .whenever back btn pressed or back pressed this layout is visible
+    /*
+     *  // use if music is playing and press back btn .whenever back btn pressed or back pressed this layout is visible*/
+    protected void onResume() {
         if (small_music.equals("yes")) {
             relativeLayout.setLayoutParams(layoutParams);
             v1.setVisibility(View.VISIBLE);       // layout visible
