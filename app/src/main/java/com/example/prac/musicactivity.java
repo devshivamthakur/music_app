@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +30,7 @@ import static com.example.prac.MainActivity.song_name2;
 import static com.example.prac.album_related_song_adapter.songdata;
 
 public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
-    static byte[] img = null;
+    static byte[] img = null;       // contains image
     static ArrayList<musicfiles> listofsong = new ArrayList<>();
     static Uri uri;
     static MediaPlayer mediaPlayer;
@@ -41,7 +40,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
     static int positon = -1;
     SeekBar seekBar;
     private Handler handler = new Handler();
-    private Thread play_pause_thread, prev_thread, next_thread, suffle_thread, repeat_thread;
+    private Thread play_pause_thread, prev_thread, next_thread, suffle_thread, repeat_thread; // three thread
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +50,9 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         getintentdata();
         song_details();
         mediaPlayer.setOnCompletionListener(this);
+        /*
+         * whenever seekbar value is changed  mediaplayer or music duration changed with there value
+         * */
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -75,6 +77,9 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                 onBackPressed();
             }
         });
+        /*
+        also whenever the song duration is changed then the value and progress of seek bar to be changed
+        */
         musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
             @Override
             public void run() {
@@ -89,6 +94,9 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
 
     }
 
+    /*
+     *  set details of song  like name, total duration, current playing , artist name
+     * */
     private void song_details() {
         if (mediaPlayer != null) {
             duration_total.setText(formaattedTime(mediaPlayer.getDuration() / 1000));
@@ -113,36 +121,48 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         return totalout;
     }
 
+    /*
+     * this method receive intent data
+     * TODO: position: it contains the positon of the song in arraylist
+     *
+     * */
     private void getintentdata() {
         Intent intent = getIntent();
         positon = intent.getIntExtra("pos", -1);
         //  Toast.makeText(this,String.valueOf(positon),Toast.LENGTH_SHORT).show();
         String show_activity_message = intent.getStringExtra("from_where");
         if (show_activity_message.equals("album")) {
-            listofsong = songdata;
+            listofsong = songdata;  // it contains album  related song data
         } else {
-            listofsong = musicfilesArrayList;
+            listofsong = musicfilesArrayList;   // it contains all song data
         }
         if (listofsong != null) {
             btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
             uri = Uri.parse(listofsong.get(positon).getPath());
         }
+        /*
+         * TODO: IF WE click  small music layout then we will reach music activity
+         *  form layout it send         * current duration , img of song that is playing ,
+
+         *
+         *
+         * */
         if (show_activity_message.equals("small_music_act")) {
             int du = intent.getIntExtra("duration", 0);
             img = musicadapter.getAlbumimg(String.valueOf(uri));
             load_img();
             //   mediaPlayer.seekTo(du*1000);
             //  Toast.makeText(this,String.valueOf(mediaPlayer.getCurrentPosition()),Toast.LENGTH_LONG).show();
-            seekBar.setProgress(du / 1000);
+            seekBar.setProgress(du / 1000);      // it convert into second   and set current progress of seekbar with value of "du"
             // mediaPlayer.start();
         } else {
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
                 mediaPlayer.release();
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-                img = musicadapter.getAlbumimg(String.valueOf(uri));
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), uri); // initialize MediaPlayer with uri(path of that song)
+                img = musicadapter.getAlbumimg(String.valueOf(uri));  // get image form of byte[]
                 load_img();
-                mediaPlayer.start();
+                mediaPlayer.start(); // start music
             } else {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
                 load_img();
@@ -161,7 +181,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         } else {
             repeate_btn.setImageResource(R.drawable.ic_baseline_repeat);
         }
-        seekBar.setMax(mediaPlayer.getDuration() / 1000);         // take it as second
+        seekBar.setMax(mediaPlayer.getDuration() / 1000);         // take it as second     set maximum value of seekbar
     }
 
     private void initview() {
@@ -196,11 +216,11 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
 
     @Override
     protected void onResume() {
-        nextThread();
-        prevThread();
-        play_pausethread();
-        shuffle_thread();
-        repeat_thread_method();
+        nextThread(); // next song method
+        prevThread();           // previous song method
+        play_pausethread();          // play pause method
+        shuffle_thread();        // shuffle method
+        repeat_thread_method();       // repeat method
         super.onResume();
     }
 

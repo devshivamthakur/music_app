@@ -21,9 +21,9 @@ import static com.example.prac.MainActivity.imageView_next;
 import static com.example.prac.MainActivity.repeat_flag;
 
 public class Album_adpater extends RecyclerView.Adapter<Album_adpater.ViewHolder> {
-    ArrayList<String> album_list;
+    ArrayList<String> album_list;     // it contains all album list
     Context context;
-    byte[] img1;
+    byte[] img1;   // image of album
 
     public Album_adpater(ArrayList<String> album_list, Context context) {
         this.album_list = album_list;

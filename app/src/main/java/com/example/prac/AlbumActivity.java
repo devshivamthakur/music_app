@@ -58,7 +58,7 @@ public class AlbumActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<musicfiles> getdata() {
+    private ArrayList<musicfiles> getdata() {  // it return all song file that relate with album nama
         ArrayList<musicfiles> temp = new ArrayList<>();
         if (album_name1 != null) {
             for (musicfiles m : musicfilesArrayList) {

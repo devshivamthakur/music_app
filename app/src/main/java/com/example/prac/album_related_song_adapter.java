@@ -27,7 +27,7 @@ public class album_related_song_adapter extends RecyclerView.Adapter<album_relat
         this.context = context;
     }
 
-    public static byte[] getAlbumimg(String uri) {
+    public static byte[] getAlbumimg(String uri) {       // return image
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         try {
             mediaMetadataRetriever.setDataSource(uri);
@@ -59,7 +59,7 @@ public class album_related_song_adapter extends RecyclerView.Adapter<album_relat
         }
         holder.music_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {       // whenever clicked  any song you will enter in music activity
                 Intent intent = new Intent(context, musicactivity.class);
                 intent.putExtra("pos", position);
                 intent.putExtra("from_where", "album");

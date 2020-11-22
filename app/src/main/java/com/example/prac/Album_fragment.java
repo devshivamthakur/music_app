@@ -16,7 +16,7 @@ import static com.example.prac.MainActivity.album_array_list;
 
 public class Album_fragment extends Fragment {
     RelativeLayout.LayoutParams layoutParams;
-    RecyclerView recyclerView_album_fragment;
+    RecyclerView recyclerView_album_fragment;       // contains all album in list
 
     public Album_fragment() {
 

@@ -39,24 +39,27 @@ import static com.example.prac.musicactivity.positon;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static final int REQUESTCODE = 1;
-    public static ArrayList<musicfiles> musicfilesArrayList;
-    public static ArrayList<String> album_array_list = new ArrayList<>();
-    static boolean shuffle_flag;
-    static boolean repeat_flag;
-    static boolean next_small_layout_flag;
-    static String small_music = "no";
-    static boolean check_media_play_or_pause;
-    static ImageView imageView_next;
-    static ImageView img_song_img;
-    static TextView song_name2;
-    static FloatingActionButton play_pause_btn2;
-    View v1;
+    public static final int REQUESTCODE = 1;       // for permission
+    public static ArrayList<musicfiles> musicfilesArrayList;   // contains  all music file
+    public static ArrayList<String> album_array_list = new ArrayList<>(); // contains all album  name
+    static boolean shuffle_flag;   // to check shuffle is on or off
+    static boolean repeat_flag;     // to check repeat is on or off
+    static String small_music = "no";  // to active small music layout
+    static boolean check_media_play_or_pause;     // to check music in playing or pause it is use in small music layout
+    static ImageView imageView_next;             // it next button of small music layout
+    static ImageView img_song_img;       // it is image of song small music layout
+    static TextView song_name2;            // it shows song name
+    static FloatingActionButton play_pause_btn2;    //  play pause btn of small music layout
+    View v1;                                        // small music layout
     RelativeLayout relativeLayout;
     RelativeLayout.LayoutParams layoutParams;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    /*
+     * this method return path of related album it is use in album activity
+     *
+     * */
     public static String getPath(String album_name) {
         for (musicfiles f1 : musicfilesArrayList) {
             if (f1.getAlbum().equals(album_name)) {
@@ -116,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
         play_pause_btn2 = findViewById(R.id.btn_play_pause2);
     }
 
+    /*
+    this method return all song
+    * */
     public ArrayList<musicfiles> getallaudio(Context context) {
         ArrayList<musicfiles> templist = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
@@ -150,10 +156,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {                    // use if music is playing and press back btn
+    protected void onResume() {                    // use if music is playing and press back btn .whenever back btn pressed or back pressed this layout is visible
         if (small_music.equals("yes")) {
             relativeLayout.setLayoutParams(layoutParams);
-            v1.setVisibility(View.VISIBLE);
+            v1.setVisibility(View.VISIBLE);       // layout visible
         }
         if (check_media_play_or_pause) {
             play_pause_btn2.setImageResource(R.drawable.ic_baseline_pause_circle);
