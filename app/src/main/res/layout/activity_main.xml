@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/tab_layout_Relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -38,6 +39,16 @@
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:visibility="gone" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_animation_music"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/lottie1" />
 
 
 </RelativeLayout>

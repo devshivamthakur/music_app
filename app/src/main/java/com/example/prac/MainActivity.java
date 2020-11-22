@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +19,7 @@ import android.database.Cursor;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +31,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -55,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout.LayoutParams layoutParams;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    static int i = 1;   // for counting anmation time
+    LottieAnimationView lottieAnimationView;
+
 
     /*
      * this method return path of related album it is use in album activity
@@ -107,6 +113,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        lottieAnimationView = findViewById(R.id.lottie_animation_music);
+        lottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                if (i == 2) {
+                    lottieAnimationView.setVisibility(View.GONE);
+                    relativeLayout.setVisibility(View.VISIBLE);
+                }
+                i++;
+
+            }
+        });
         permission();
         layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 0, 0, 140);
@@ -115,9 +148,9 @@ public class MainActivity extends AppCompatActivity {
         song_name2 = findViewById(R.id.song_title2);
         relativeLayout = findViewById(R.id.tab_layout_Relative);
         v1 = findViewById(R.id.small_music_layout);
-
         play_pause_btn2 = findViewById(R.id.btn_play_pause2);
     }
+
 
     /*
     this method return all song
