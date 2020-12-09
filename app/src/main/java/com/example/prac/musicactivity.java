@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -48,8 +49,17 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         setContentView(R.layout.activity_musicactivity);
         initview();
         getintentdata();
-        song_details();
-        mediaPlayer.setOnCompletionListener(this);
+        try {
+            song_details();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            mediaPlayer.setOnCompletionListener(this);
+        } catch (Exception e) {
+
+        }
+
         /*
          * whenever seekbar value is changed  mediaplayer or music duration changed with there value
          * */
@@ -97,7 +107,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
     /*
      *  set details of song  like name, total duration, current playing , artist name
      * */
-    private void song_details() {
+    private void song_details() throws Exception {
         if (mediaPlayer != null) {
             duration_total.setText(formaattedTime(mediaPlayer.getDuration() / 1000));
             current_playing.setText(listofsong.get(positon).getTitle());
@@ -159,14 +169,24 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
                 mediaPlayer.release();
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), uri); // initialize MediaPlayer with uri(path of that song)
-                img = musicadapter.getAlbumimg(String.valueOf(uri));  // get image form of byte[]
-                load_img();
-                mediaPlayer.start(); // start music
+                try {
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), uri); // initialize MediaPlayer with uri(path of that song)
+                    img = musicadapter.getAlbumimg(String.valueOf(uri));  // get image form of byte[]
+                    load_img();
+                    mediaPlayer.start(); // start music
+                } catch (Exception e) {
+
+                }
+
             } else {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-                load_img();
-                mediaPlayer.start();
+                try {
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+                    load_img();
+                    mediaPlayer.start();
+                } catch (Exception e) {
+
+                }
+
             }
         }
 
@@ -181,7 +201,11 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         } else {
             repeate_btn.setImageResource(R.drawable.ic_baseline_repeat);
         }
-        seekBar.setMax(mediaPlayer.getDuration() / 1000);         // take it as second     set maximum value of seekbar
+        try {
+            seekBar.setMax(mediaPlayer.getDuration() / 1000);
+        } catch (Exception e) {
+            Log.e("task12", e.getMessage().toString());
+        }
     }
 
     private void initview() {
@@ -364,8 +388,16 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                 uri = Uri.parse(listofsong.get(positon).getPath());              // song location
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
                 load_img();
-                song_details();
-                seekBar.setMax(mediaPlayer.getDuration() / 1000);
+                try {
+                    song_details();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    seekBar.setMax(mediaPlayer.getDuration() / 1000);
+                } catch (Exception e) {
+
+                }
                 musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
                     @Override
                     public void run() {
@@ -378,7 +410,12 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                 });
                 mediaPlayer.setOnCompletionListener(this);
                 btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
-                mediaPlayer.start();
+                try {
+                    mediaPlayer.start();
+                } catch (Exception e) {
+
+                }
+
             } else {
                 mediaPlayer.release();
                 if (!shuffle_flag && !repeat_flag) {
@@ -389,8 +426,16 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                 uri = Uri.parse(listofsong.get(positon).getPath());              // song location
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
                 load_img();
-                song_details();
-                seekBar.setMax(mediaPlayer.getDuration() / 1000);
+                try {
+                    song_details();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    seekBar.setMax(mediaPlayer.getDuration() / 1000);
+                } catch (Exception e) {
+
+                }
                 musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
                     @Override
                     public void run() {
@@ -446,8 +491,17 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             uri = Uri.parse(listofsong.get(positon).getPath());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             load_img();
-            song_details();
-            seekBar.setMax(mediaPlayer.getDuration() / 1000);
+            try {
+                song_details();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                seekBar.setMax(mediaPlayer.getDuration() / 1000);
+            } catch (Exception e) {
+
+            }
+
             musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
                 @Override
                 public void run() {
@@ -460,7 +514,11 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             });
             mediaPlayer.setOnCompletionListener(this);
             btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
-            mediaPlayer.start();
+            try {
+                mediaPlayer.start();
+            } catch (Exception e) {
+
+            }
         } else {
             mediaPlayer.release();
             if (!shuffle_flag && !repeat_flag) {
@@ -471,7 +529,11 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             uri = Uri.parse(listofsong.get(positon).getPath());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             load_img();
-            song_details();
+            try {
+                song_details();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             seekBar.setMax(mediaPlayer.getDuration() / 1000);
             musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
                 @Override

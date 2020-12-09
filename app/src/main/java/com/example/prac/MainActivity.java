@@ -176,13 +176,18 @@ public class MainActivity extends AppCompatActivity {
                 String duration = cursor.getString(3);
                 musicfiles musicfiles = new musicfiles(path, title, album, duration, artist);
                 try {
-                    templist.add(musicfiles);
+                    if (path.endsWith(".mp3") || path.endsWith(".mp4")) {
+                        templist.add(musicfiles);
+                    }
                 } catch (Exception e) {
 
                 }
-                if (!album_array_list.contains(album)) {
-                    album_array_list.add(album);
+                if (path.endsWith(".mp3") || path.endsWith(".mp4")) {
+                    if (!album_array_list.contains(album)) {
+                        album_array_list.add(album);
+                    }
                 }
+
             }
         }
         return templist;
