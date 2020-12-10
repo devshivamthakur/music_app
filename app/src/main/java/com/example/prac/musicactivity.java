@@ -174,6 +174,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                     img = musicadapter.getAlbumimg(String.valueOf(uri));  // get image form of byte[]
                     load_img();
                     mediaPlayer.start(); // start music
+                    mediaPlayer.setOnCompletionListener(this);
                 } catch (Exception e) {
 
                 }
@@ -183,6 +184,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                     mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
                     load_img();
                     mediaPlayer.start();
+                    mediaPlayer.setOnCompletionListener(this);
                 } catch (Exception e) {
 
                 }
@@ -190,7 +192,9 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
             }
         }
 
-
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            btn_play_pause.setImageResource(R.drawable.ic_baseline_play_circle_);
+        }
         if (shuffle_flag) {
             suffle_btn.setImageResource(R.drawable.ic_baseline_shuffle_on);
         } else {
@@ -204,7 +208,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
         try {
             seekBar.setMax(mediaPlayer.getDuration() / 1000);
         } catch (Exception e) {
-            Log.e("task12", e.getMessage().toString());
+            // Log.e("task12", e.getMessage().toString());
         }
     }
 
@@ -312,6 +316,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
                     @Override
                     public void onClick(View v) {
                         setPlay_pause_thread();
+                        //  Log.e("updated","on");
                     }
                 });
                 btn_play_pause.setOnClickListener(new View.OnClickListener() {
@@ -455,7 +460,6 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
 
     private void setPlay_pause_thread() {
         if (!mediaPlayer.isPlaying()) {
-
             mediaPlayer.start();
             btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
             play_pause_btn2.setImageResource(R.drawable.ic_baseline_pause_circle);
@@ -480,79 +484,87 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
     }
 
     private void setBtn_next_thread() {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            if (!shuffle_flag && !repeat_flag) {
-                positon = positon + 1 % listofsong.size();
-            } else if (shuffle_flag && !repeat_flag) {
-                positon = new Random().nextInt(listofsong.size());
-            }
-            uri = Uri.parse(listofsong.get(positon).getPath());
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-            load_img();
-            try {
-                song_details();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
+        if ((positon + 1) != listofsong.size()) {
+            // Log.e("test12", String.valueOf(mediaPlayer.isPlaying()) );
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                if (!shuffle_flag && !repeat_flag) {
+                    positon = positon + 1 % listofsong.size();
+                    //    Log.e("test13", String.valueOf(positon) );
+                } else if (shuffle_flag && !repeat_flag) {
+                    positon = new Random().nextInt(listofsong.size());
+                }
+                uri = Uri.parse(listofsong.get(positon).getPath());
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+                //   Log.e("test14", String.valueOf(positon) );
+                load_img();
+                try {
+                    song_details();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    seekBar.setMax(mediaPlayer.getDuration() / 1000);
+                } catch (Exception e) {
+
+                }
+                //  Log.e("test15", String.valueOf(positon) );
+                musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
+                    @Override
+                    public void run() {
+                        if (mediaPlayer != null) {
+                            int current_pos = mediaPlayer.getCurrentPosition() / 1000; // to get in second
+                            seekBar.setProgress(current_pos);      // set progress in seek bar
+                        }
+                        handler.postDelayed(this, 1000);
+                    }
+                });
+                mediaPlayer.setOnCompletionListener(this);
+                btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
+                try {
+                    mediaPlayer.start();
+                } catch (Exception e) {
+
+                }
+            } else {
+                mediaPlayer.release();
+                if (!shuffle_flag && !repeat_flag) {
+                    positon = positon + 1 % listofsong.size();
+                    //      Log.e("test15r", String.valueOf(positon) );
+                } else if (shuffle_flag && !repeat_flag) {
+                    positon = new Random().nextInt(listofsong.size());
+                }
+                uri = Uri.parse(listofsong.get(positon).getPath());
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+                load_img();
+                try {
+                    song_details();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 seekBar.setMax(mediaPlayer.getDuration() / 1000);
-            } catch (Exception e) {
-
-            }
-
-            musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
-                @Override
-                public void run() {
-                    if (mediaPlayer != null) {
-                        int current_pos = mediaPlayer.getCurrentPosition() / 1000; // to get in second
-                        seekBar.setProgress(current_pos);      // set progress in seek bar
+                musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
+                    @Override
+                    public void run() {
+                        if (mediaPlayer != null) {
+                            int current_pos = mediaPlayer.getCurrentPosition() / 1000; // to get in second
+                            seekBar.setProgress(current_pos);      // set progress in seek bar
+                        }
+                        handler.postDelayed(this, 1000);
                     }
-                    handler.postDelayed(this, 1000);
-                }
-            });
-            mediaPlayer.setOnCompletionListener(this);
-            btn_play_pause.setImageResource(R.drawable.ic_baseline_pause_circle);
-            try {
-                mediaPlayer.start();
-            } catch (Exception e) {
+                });
+                mediaPlayer.setOnCompletionListener(this);
+                btn_play_pause.setImageResource(R.drawable.ic_baseline_play_circle_);
 
             }
-        } else {
-            mediaPlayer.release();
-            if (!shuffle_flag && !repeat_flag) {
-                positon = positon + 1 % listofsong.size();
-            } else if (shuffle_flag && !repeat_flag) {
-                positon = new Random().nextInt(listofsong.size());
-            }
-            uri = Uri.parse(listofsong.get(positon).getPath());
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-            load_img();
-            try {
-                song_details();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            seekBar.setMax(mediaPlayer.getDuration() / 1000);
-            musicactivity.this.runOnUiThread(new Runnable() {    // for song multi thread
-                @Override
-                public void run() {
-                    if (mediaPlayer != null) {
-                        int current_pos = mediaPlayer.getCurrentPosition() / 1000; // to get in second
-                        seekBar.setProgress(current_pos);      // set progress in seek bar
-                    }
-                    handler.postDelayed(this, 1000);
-                }
-            });
-            mediaPlayer.setOnCompletionListener(this);
-            btn_play_pause.setImageResource(R.drawable.ic_baseline_play_circle_);
 
         }
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+
         setBtn_next_thread();
         if (mediaPlayer != null) {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
