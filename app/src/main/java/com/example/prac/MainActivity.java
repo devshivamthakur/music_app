@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     static int i = 1;   // for counting anmation time
     LottieAnimationView lottieAnimationView;
-
+    MenuItem menuItem; // search MenuItem
+    Songs_fragment songs_fragment;
 
     /*
      * this method return path of related album it is use in album activity
@@ -103,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.View_pager);
         ViewPageAdapter viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
-        viewPageAdapter.addFragment(new Songs_fragment(), "Song");
+        songs_fragment = new Songs_fragment();
+        viewPageAdapter.addFragment(songs_fragment, "Song");
         viewPageAdapter.addFragment(new Album_fragment(), "Album");
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -113,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
         lottieAnimationView = findViewById(R.id.lottie_animation_music);
         lottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
@@ -135,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 if (i == 2) {
                     lottieAnimationView.setVisibility(View.GONE);
                     relativeLayout.setVisibility(View.VISIBLE);
+                    getSupportActionBar().show();
+
                 }
                 i++;
 
@@ -266,10 +272,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {  //this is for search filter
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_item, menu);
+        menuInflater.inflate(R.menu.menu, menu);
+        menuItem = menu.findItem(R.id.search_menu);
+        if (menuItem != null) {
+            SearchView searchView = (SearchView) menuItem.getActionView();  // initialize Search View
+            /*
+             * todo: if make search in search View than pass text to song fragment and make search
+             *  */
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
+                @Override
+                public boolean onQueryTextChange(String newText) {
+
+                    if (songs_fragment != null) {
+                        songs_fragment.onSearchFileter(newText);  // pass data to song fragment
+                        Log.e("searched", newText);
+                    }
+                    return false;
+                }
+            });
+        }
         return super.onCreateOptionsMenu(menu);
     }
 

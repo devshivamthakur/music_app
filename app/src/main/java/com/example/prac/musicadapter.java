@@ -20,15 +20,37 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 
-public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder> {
+public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder> implements Filterable {
 
     private ArrayList<musicfiles> songdata;
+    private ArrayList<musicfiles> C_songdata;      // copy of data
     private Context context;
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<musicfiles> filteredlist = new ArrayList<>();
+            if (constraint == null && constraint.length() == 0) {
+                filteredlist = C_songdata;
+            } else {
+                String txt = constraint.toString().toLowerCase();
+                for (musicfiles mf : C_songdata) {
+                    if ((mf.getTitle().toLowerCase()).contains(txt)) {
+                        filteredlist.add(mf);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredlist;
+            return filterResults;
+        }
 
-    public musicadapter(ArrayList<musicfiles> songdata, Context context) {
-        this.songdata = songdata;
-        this.context = context;
-    }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            songdata.clear();
+            songdata.addAll((ArrayList) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     @NonNull
     @Override
@@ -75,6 +97,17 @@ public class musicadapter extends RecyclerView.Adapter<musicadapter.musicholder>
         byte[] img = mediaMetadataRetriever.getEmbeddedPicture();
         mediaMetadataRetriever.release();
         return img;
+    }
+
+    public musicadapter(ArrayList<musicfiles> songdata, Context context) {
+        this.songdata = songdata;
+        this.context = context;
+        C_songdata = new ArrayList<>(songdata);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
     }
 
     static class musicholder extends RecyclerView.ViewHolder {

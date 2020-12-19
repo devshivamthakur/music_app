@@ -47,6 +47,7 @@ public class musicactivity extends AppCompatActivity implements MediaPlayer.OnCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musicactivity);
+        getSupportActionBar().hide();
         initview();
         getintentdata();
         try {
